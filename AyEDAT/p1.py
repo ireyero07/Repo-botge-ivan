@@ -162,3 +162,23 @@ def plot_single_curve(
         )  #
 
     plt.show()  # Muestra la figura
+
+
+def init_cd(n: int):
+
+    array = []
+    for i in range(n-1):
+        array[i] = -1
+
+    return array
+
+
+def union(rep_1: int, rep_2: int, p_cd: np.ndarray): 
+
+    pass
+
+
+def find(ind: int, p_cd: np.ndarray)-> int:
+
+
+    pass
