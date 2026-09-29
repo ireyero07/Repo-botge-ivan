@@ -164,13 +164,8 @@ def plot_single_curve(
     plt.show()  # Muestra la figura
 
 
-def init_cd(n: int):
-
-    array = []
-    for i in range(n-1):
-        array[i] = -1
-
-    return array
+def init_cd(n: int)-> np.ndarray:
+    return np.full(n, -1, dtype = int)
 
 
 def union(rep_1: int, rep_2: int, p_cd: np.ndarray): 
@@ -179,6 +174,18 @@ def union(rep_1: int, rep_2: int, p_cd: np.ndarray):
 
 
 def find(ind: int, p_cd: np.ndarray)-> int:
+    root = ind
+    
+    while p_cd[root] >= 0:
+        root = p_cd[root]
 
+    z = ind
+    while z != root:
+        next = p_cd[z]
+        p_cd[z] = root
+        z = root
+    return root
+
+def ccs(n: int, l: List)-> Dict: 
 
     pass
