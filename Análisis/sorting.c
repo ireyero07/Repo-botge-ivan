@@ -23,6 +23,7 @@ int InsertSort(int *array, int ip, int iu)
   {
     return ERR;
   }
+  
   for (i = ip + 1; i <= iu; i++)
   {
     A = array[i];

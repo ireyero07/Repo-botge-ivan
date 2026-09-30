@@ -4,7 +4,7 @@
 #-----------------------
 
 CC = gcc -ansi -pedantic
-CFLAGS = -Wall
+CFLAGS = -Wall -std=c99
 EXE = exercise1 exercise2 exercise3 exercise4 
 
 all : $(EXE)
@@ -47,7 +47,7 @@ exercise1_test:
 
 exercise2_test:
 	@echo Running exercise2
-	@./exercise2 -size 5 -numP 5
+	@./exercise2 -size 5 -numP 20
 
 exercise3_test:
 	@echo Running exercise3
@@ -55,7 +55,7 @@ exercise3_test:
 
 exercise4_test:
 	@echo Running exercise4
-	@./exercise4 -size 1
+	@./exercise4 -size 100
 
 exercise5_test:
 	@echo Running exercise5
