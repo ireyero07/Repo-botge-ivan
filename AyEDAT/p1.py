@@ -1,6 +1,7 @@
 import time # Para la función time_measure. Entender código dado.
 import matplotlib.pyplot as plt # Para imprimir gráficas. Entender código dado.
 import random # Puede usarse random.randint(n, m) para generar listas aleatorias de enteros en las funciones dataprep.
+import numpy as np
 
 # I.A.1 Medición de tiempos de ejecución
 def time_measure(f, dataprep, Nlist, Nrep=1000, Nstat=100):
@@ -168,9 +169,23 @@ def init_cd(n: int)-> np.ndarray:
     return np.full(n, -1, dtype = int)
 
 
-def union(rep_1: int, rep_2: int, p_cd: np.ndarray): 
+def union(rep_1: int, rep_2: int, p_cd: np.ndarray):
+    if p_cd[rep_1] < 0 and p_cd[rep_2] < 0 and rep_1 != rep_2:
 
-    pass
+        if p_cd[rep_2] < p_cd[rep_1]:
+            p_cd[rep_1] = rep_2
+            return rep_2
+
+        elif p_cd[rep_1] < p_cd[rep_2]:
+            p_cd[rep_2] = rep_1
+            return rep_1
+
+        else:
+            p_cd[rep_2] = rep_1
+            p_cd[rep_1] -= 1
+            return rep_1
+
+    return None
 
 
 def find(ind: int, p_cd: np.ndarray)-> int:
@@ -183,9 +198,30 @@ def find(ind: int, p_cd: np.ndarray)-> int:
     while z != root:
         next = p_cd[z]
         p_cd[z] = root
-        z = root
+        z = root #aqui no habria que poner next en vez de root???
     return root
 
-def ccs(n: int, l: List)-> Dict: 
+def cd_2_dict(p_cd: np.ndarray) -> Dict:
+    result = {}
 
-    pass
+    for i in range(len(p_cd)):
+        rep = find(i, p_cd)
+
+        if rep not in result:
+            result[rep] = []
+
+        result[rep].append(i)
+
+    return result
+
+def ccs(n: int, l: List)-> Dict:
+    p_cd = init_cd(n)
+
+    for x, y in l:
+        rep_1 = find(x, p_cd)
+        rep_2 = find(y, p_cd)
+
+        if rep_1 != rep_2:
+            union(rep_1, rep_2, p_cd)
+
+    return cd_2_dict(p_cd)
