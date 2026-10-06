@@ -51,7 +51,35 @@ int InsertSort(int *array, int ip, int iu)
 /* Function: SelectSort    Date:                   */
 /* Your comment                                    */
 /***************************************************/
-/*int BubbleSort(int* array, int ip, int iu)
+int BubbleSort(int *array, int ip, int iu)
 {
+  int i, j;
+  int aux;
+  int swapped;
+  int n_operaciones = 0;
 
-}*/
+  if (array == NULL || ip < 0 || iu < ip) {
+    return ERR;
+  }
+
+  for (i = iu; i > ip; i--) {
+    swapped = 0;
+
+    for (j = ip; j < i; j++) {
+      n_operaciones++;
+
+      if (array[j] > array[j + 1]) {
+        aux = array[j];
+        array[j] = array[j + 1];
+        array[j + 1] = aux;
+        swapped = 1;
+      }
+    }
+
+    if (swapped == 0) {
+      break;
+    }
+  }
+
+  return n_operaciones;
+}

@@ -198,7 +198,7 @@ def find(ind: int, p_cd: np.ndarray)-> int:
     while z != root:
         next = p_cd[z]
         p_cd[z] = root
-        z = root #aqui no habria que poner next en vez de root???
+        z = next #aqui no habria que poner next en vez de root???
     return root
 
 def cd_2_dict(p_cd: np.ndarray) -> Dict:
