@@ -10,6 +10,7 @@
  */
 
 #include "sorting.h"
+#include "stdlib.h"
 
 /***************************************************/
 /* Function: InsertSort    Date:                   */

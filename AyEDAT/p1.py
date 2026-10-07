@@ -54,14 +54,17 @@ def dataprep_rle(n):
 # I.A.2 Búsqueda de duplicados manteniendo orden de aparición
 def find_duplicates(lst):
 
-    temp = []
+    vistos = set()
+    repetidos = set()
     final_l = []
 
-    for i in lst:
-        if i in temp and i not in final_l:
-            final_l.append(i)
-        elif i not in temp:
-            temp.append(i)
+    for elemento in lst:
+        if elemento in vistos:
+            if elemento not in repetidos:
+                final_l.append(elemento)
+                repetidos.add(elemento)
+        else:
+            vistos.add(elemento)
 
     return final_l
 
@@ -198,10 +201,10 @@ def find(ind: int, p_cd: np.ndarray)-> int:
     while z != root:
         next = p_cd[z]
         p_cd[z] = root
-        z = next #aqui no habria que poner next en vez de root???
+        z = next 
     return root
 
-def cd_2_dict(p_cd: np.ndarray) -> Dict:
+def cd_2_dict(p_cd: np.ndarray) -> dict:
     result = {}
 
     for i in range(len(p_cd)):
@@ -214,7 +217,7 @@ def cd_2_dict(p_cd: np.ndarray) -> Dict:
 
     return result
 
-def ccs(n: int, l: List)-> Dict:
+def ccs(n: int, l: list)-> dict:
     p_cd = init_cd(n)
 
     for x, y in l:

@@ -10,7 +10,7 @@
  */
 
 #include "times.h"
-#include "sorting.h"
+
 
 /***************************************************/
 /* Function: average_sorting_time Date:            */
@@ -19,13 +19,33 @@
 /***************************************************/
 short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime)
 {
+  double time;
+  clock_t clk;
+  int *aux = NULL;
+  int avg = 0, min = 0, max = 0;
+
   if (!metodo || n_perms < 0 || N < 0 || ! ptime)
   {
-    return -1;
+    return ERR;
+  }
+
+  aux = (int*) malloc(sizeof(int)*N);
+  if (!aux)
+  {
+    return ERR;
+  }
+
+  aux = generate_permutations (n_perms, N);
+  if (!aux)
+  {
+    return ERR;
   }
 
   ptime->n_elems = 
   ptime->N = N;
+
+  free (aux);
+  return OK;
 }
 
 /***************************************************/
@@ -34,10 +54,40 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
 /* Your documentation                              */
 /***************************************************/
 short generate_sorting_times(pfunc_sort method, char* file, 
-                                int num_min, int num_max, 
-                                int incr, int n_perms)
+                            int num_min, int num_max, 
+                            int incr, int n_perms)
 {
-  /* Your code */
+  int N, k;
+  short chek;
+  PTIME_AA *p = NULL;
+  if (!method || !file || 1 > num_min || num_min > num_max || incr < 0 || n_perms < 0)
+  {
+    return ERR;
+  }
+
+  p = (PTIME_AA*) malloc(sizeof(PTIME_AA));
+  if (!p)
+  {
+    return ERR;
+  }
+
+  N = num_min + k*incr;
+  while (N <= num_max)
+  {
+    chek = average_sorting_time(method, n_perms, N, p);
+    if (chek == ERR)
+    {
+      return ERR;
+    }
+    if (save_time_table(file, p, N) == ERR)
+    {
+      return ERR;
+    }
+    k++;
+  }
+
+  free(p);
+  return OK;
 }
 
 /***************************************************/
