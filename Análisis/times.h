@@ -17,6 +17,7 @@
   #define OK (!(ERR))
 #endif
 
+#include "stdio.h"
 #include "sorting.h"
 #include "sorting.h"
 #include "stdlib.h"

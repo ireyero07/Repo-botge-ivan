@@ -95,9 +95,30 @@ short generate_sorting_times(pfunc_sort method, char* file,
 /*                                                 */
 /* Your documentation                              */
 /***************************************************/
-short save_time_table(char* file, PTIME_AA ptime, int n_times)
+short save_time_table(char* file, PTIME_AA time, int n_times)
 {
-  /* your code */
+    FILE *f;
+    int i;
+
+    if (file == NULL || time == NULL || n_times <= 0) {
+        return ERR;
+    }
+
+    f = fopen(file, "w");
+
+    if (f == NULL) {
+        return ERR;
+    }
+
+    fprintf(f, "N\tn_elems\ttime\taverage_ob\tmin_ob\tmax_ob\n");
+
+    for (i = 0; i < n_times; i++) {
+        fprintf(f, "%d\t%d\t%f\t%f\t%d\t%d\n", time[i].N, time[i].n_elems, time[i].time, time[i].average_ob, time[i].min_ob, time[i].max_ob);
+    }
+
+    fclose(f);
+
+    return OK;
 }
 
 
