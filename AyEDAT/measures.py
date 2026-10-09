@@ -1,35 +1,40 @@
-# import time # Para la función time_measure. Entender código dado.
-# import matplotlib.pyplot as plt # Para imprimir gráficas. Entender código dado.
-# import random # Puede usarse random.randint(n, m) para generar listas aleatorias de enteros en las funciones dataprep.
-# import numpy as np
-# from p1 import (
-#     time_measure,
-#     has_sum_pair,
-#     dataprep_sum_pair_hit,
-#     dataprep_sum_pair_miss,
-#     plot_single_curve
-# )
+import time # Para la funcion time_measure. Entender codigo dado.
+import matplotlib.pyplot as plt # Para imprimir graficas. Entender codigo dado.
+import random # Puede usarse random.randint(n, m) para generar listas aleatorias de enteros en las funciones dataprep.
+import numpy as np
+from p1 import (
+     time_measure,
+     has_sum_pair,
+     dataprep_sum_pair_hit,
+     dataprep_sum_pair_miss,
+     plot_single_curve,
+     rle_encode_naive,
+     rle_encode_optimized,
+     dataprep_rle
+ )
 
-# Nlist = list(range(10, 10001, 1000))
+Nlist = list(range(10, 10001, 100))
 
-# result_hit = time_measure(has_sum_pair, dataprep_sum_pair_hit, Nlist, 10, 10)
-# result_miss = time_measure(has_sum_pair, dataprep_sum_pair_miss, Nlist, 10, 10)
+result_naive = time_measure(rle_encode_naive, dataprep_rle, Nlist, 10, 10)
+result_optimized = time_measure(rle_encode_optimized, dataprep_rle, Nlist, 10, 10)
 
-# times_hit = [x[0] for x in result_hit]
-# times_miss = [x[0] for x in result_miss]
+times_grouped_naive = [x[0] for x in result_naive]
+times_grouped_optimized = [x[0] for x in result_optimized]
 
-# plot_single_curve(
-#     Nlist,
-#     times_hit,
-#     title="Tiempo de has_sum_pair - Caso hit",
-#     xlabel="Tamaño de la lista (n)",
-#     ylabel="Tiempo (s)"
-# )
+plot_single_curve(
+     Nlist,
+     times_grouped_naive,
+     title="Tiempo de rle_encode - Caso naive (algoritmo ineficiente)",
+     xlabel="Tamaño de la lista (n)",
+    ylabel="Tiempo (s)",
+    filename="grafica_naive.png"
+ )
 
-# plot_single_curve(
-#     Nlist,
-#     times_miss,
-#     title="Tiempo de has_sum_pair - Caso miss",
-#     xlabel="Tamaño de la lista (n)",
-#     ylabel="Tiempo (s)"
-# )
+plot_single_curve(
+     Nlist,
+     times_grouped_optimized,
+     title="Tiempo de rle_encode - Caso optimized (algoritmo eficiente)",
+     xlabel="Tamaño de la lista (n)",
+     ylabel="Tiempo (s)",
+     filename="grafica_optimized.png"
+ )
