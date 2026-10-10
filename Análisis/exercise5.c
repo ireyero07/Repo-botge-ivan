@@ -28,8 +28,8 @@ int main(int argc, char** argv)
 {
     int i, num_min, num_max, incr, n_perms;
     char nombre[256];
-    char nombre_insert[256];
-    char nombre_bubble[256];
+    char nombre_insert[300];
+    char nombre_bubble[300];
     short ret;
     unsigned int seed;
 

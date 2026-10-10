@@ -5,7 +5,7 @@
 
 CC = gcc -ansi -pedantic
 CFLAGS = -Wall -std=c99
-EXE = exercise1 exercise2 exercise3 exercise4 
+EXE = exercise1 exercise2 exercise3 exercise4 exercise5
 
 all : $(EXE)
 
