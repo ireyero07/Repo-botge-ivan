@@ -19,13 +19,13 @@
 short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime)
 {
   /*Ivan he comentado la función porque es compleja y va a venir bien para los ejercicios*/
-  double t;
+  double t = 0;
   clock_t start, end;
   int **aux = NULL;
   int i, ob;
 
   /*Chequeo de errores*/
-  if (!metodo || n_perms < 0 || N < 0 || !ptime)
+  if (!metodo || n_perms <= 0 || N < 0 || !ptime)
   {
     return ERR;
   }
@@ -39,6 +39,10 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
 
   /*Comienza el reloj con start, comienza la organización y cierra con end*/
   start = clock();
+  if (start == (clock_t)-1)
+  {
+    return ERR;
+  }
   for (i = 0; i < n_perms; i++)
   {
     ob = metodo(aux[i], 0, N - 1);
@@ -73,13 +77,13 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
         ptime->max_ob = ob;
       }
     }
-    end = clock();
   }
+  end = clock();
 
   /*Una vez calculado asigna los valores, end-start es para calcular el tiempo transcurrido y clocks_per_sec es la conversion a segundos*/
   ptime->n_elems = n_perms;
   ptime->N = N;
-  ptime->time = ((end - start) / CLOCKS_PER_SEC) / n_perms;
+  ptime->time = (((double)(end - start)) / CLOCKS_PER_SEC) / n_perms;
   ptime->average_ob = t / n_perms;
 
   /*Liberación de memoria*/
@@ -100,33 +104,36 @@ short generate_sorting_times(pfunc_sort method, char *file,
                              int num_min, int num_max,
                              int incr, int n_perms)
 {
-  int N, k;
-  short chek;
-  PTIME_AA *p = NULL;
-  if (!method || !file || 1 > num_min || num_min > num_max || incr < 0 || n_perms < 0)
+  int N, k = 0, num_times;
+  short check;
+  PTIME_AA p = NULL;
+
+  if (!method || !file || 1 > num_min || num_min > num_max || incr <= 0 || n_perms < 0)
   {
     return ERR;
   }
 
-  p = (PTIME_AA *)malloc(sizeof(PTIME_AA));
+  num_times = ((num_max - num_min) / incr) + 1;
+
+  p = (PTIME_AA)malloc(num_times * sizeof(TIME_AA));
   if (!p)
   {
     return ERR;
   }
 
-  N = num_min + k * incr;
-  while (N <= num_max)
+  for (N = num_min, k = 0; N <= num_max; N += incr, k++)
   {
-    chek = average_sorting_time(method, n_perms, N, p);
-    if (chek == ERR)
+    if (average_sorting_time(method, n_perms, N, &p[k]) == ERR)
     {
+      free(p);
       return ERR;
     }
-    if (save_time_table(file, p, N) == ERR)
-    {
-      return ERR;
-    }
-    k++;
+  }
+
+  if (save_time_table(file, p, num_times) == ERR)
+  {
+    free(p);
+    return ERR;
   }
 
   free(p);

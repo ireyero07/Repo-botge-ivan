@@ -49,7 +49,7 @@ int InsertSort(int *array, int ip, int iu)
 }
 
 /***************************************************/
-/* Function: SelectSort    Date:                   */
+/* Function: BubbleSort    Date:                   */
 /* Your comment                                    */
 /***************************************************/
 int BubbleSort(int *array, int ip, int iu)
