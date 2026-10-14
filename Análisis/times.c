@@ -105,7 +105,6 @@ short generate_sorting_times(pfunc_sort method, char *file,
                              int incr, int n_perms)
 {
   int N, k = 0, num_times;
-  short check;
   PTIME_AA p = NULL;
 
   if (!method || !file || 1 > num_min || num_min > num_max || incr <= 0 || n_perms < 0)
