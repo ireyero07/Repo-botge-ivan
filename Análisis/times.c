@@ -3,18 +3,29 @@
  * Descripcion: Implementation of time measurement functions
  *
  * Fichero: times.c
- * Autor: Carlos Aguirre Maeso
+ * Autor: Jorge Torrijos de la Cruz e Ivan Reyero Fernández
  * Version: 1.0
- * Fecha: 16-09-2019
+ * Fecha: 16-09-2026
  *
  */
 
 #include "times.h"
 
 /***************************************************/
-/* Function: average_sorting_time Date:            */
+/* Function: average_sorting_time Date: 29/09/2026 */
+/* Authors: Jorge Torrijos de la Cruz              */
 /*                                                 */
-/* Your documentation                              */
+/* Function that  measures all of the ptime fields */
+/*  of a sorting function                          */
+/*                                                 */
+/* Input:                                          */
+/* pfunc_sort metodo: The sorting function         */
+/* int n_perms: numbers of perms sent to generate	 */
+/* int N: dimension of the permutations			       */
+/* PTIME_AA ptime: pointer to time structure 			 */
+/* Output:                                         */
+/* int: ERR when the function has problems, OK     */
+/*when it finishes without problems                */
 /***************************************************/
 short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime)
 {
@@ -96,9 +107,22 @@ short average_sorting_time(pfunc_sort metodo, int n_perms, int N, PTIME_AA ptime
 }
 
 /***************************************************/
-/* Function: generate_sorting_times Date:          */
+/* Function: generate_sorting_times Date: 29/09/2026 */
+/* Authors: Ivan Reyero Fernández                  */
 /*                                                 */
-/* Your documentation                              */
+/* Function that  call the measuring and exporting */
+/*  functions                                      */
+/*                                                 */
+/* Input:                                          */
+/* pfunc_sort metodo: The sorting function         */
+/* char *file: name of the file to export the data */
+/* int num_min: number for minimum case            */
+/* int num_max: number for maximum case            */
+/* int incr: size of the increment between perms 	 */
+/* int n_perms: numbers of perms sent to generate	 */
+/* Output:                                         */
+/* int: ERR when the function has problems, OK     */
+/*when it finishes without problems                */
 /***************************************************/
 short generate_sorting_times(pfunc_sort method, char *file,
                              int num_min, int num_max,
@@ -140,9 +164,19 @@ short generate_sorting_times(pfunc_sort method, char *file,
 }
 
 /***************************************************/
-/* Function: save_time_table Date:                 */
+/* Function: save_time_table      Date: 29/09/2026 */
+/* Authors: Ivan Reyero Fernández                  */
 /*                                                 */
-/* Your documentation                              */
+/* Function that exports the data in the pointer   */
+/*  to a file                                      */
+/*                                                 */
+/* Input:                                          */
+/* char *file: name of the file to export the data */
+/* PTIME_AA ptime: pointer to time structure 			 */
+/* int n_times: amount of cases                    */
+/* Output:                                         */
+/* int: ERR when the function has problems, OK     */
+/*when it finishes without problems                */
 /***************************************************/
 short save_time_table(char *file, PTIME_AA time, int n_times)
 {

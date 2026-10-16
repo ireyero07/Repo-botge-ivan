@@ -86,7 +86,7 @@ int main(int argc, char** argv)
     ret_bubble = BubbleSort(perm_bubble, 0, tamano - 1);
 
     if (ret_bubble == ERR) {
-        printf("Error: Error in BubbleSort\n");
+        printf("Error: Error in InsertSort\n");
 
         free(perm);
         free(perm_insert);
@@ -105,13 +105,13 @@ int main(int argc, char** argv)
     printf("\nOB InsertSort: %d\n", ret_insert);
 
     /* Print BubbleSort result */
-    printf("\nBubbleSort:\n");
+    /*printf("\nBubbleSort:\n");
 
     for (j = 0; j < tamano; j++) {
         printf("%d\t", perm_bubble[j]);
     }
 
-    printf("\nOB BubbleSort: %d\n", ret_bubble);
+    printf("\nOB BubbleSort: %d\n", ret_bubble);*/
 
     /* Free memory */
     free(perm);
