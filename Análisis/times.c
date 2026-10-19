@@ -165,7 +165,7 @@ short generate_sorting_times(pfunc_sort method, char *file,
 
 /***************************************************/
 /* Function: save_time_table      Date: 29/09/2026 */
-/* Authors: Ivan Reyero Fernández                  */
+/* Authors: Jorge Torrijos de la Cruz              */
 /*                                                 */
 /* Function that exports the data in the pointer   */
 /*  to a file                                      */
