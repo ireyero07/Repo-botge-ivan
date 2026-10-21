@@ -17,13 +17,17 @@
   #define OK (!(ERR))
 #endif
 
+#include "permutations.h"
 /* type definitions */
 typedef int (* pfunc_sort)(int*, int, int);
+typedef int (*pfunc_pivot)(int*, int, int, int*);
 
 /* Functions */
+int MergeSort(int* array, int ip, int iu);
+int merge(int* array, int ip, int iu, int im);
 
-int BubbleSort(int* array, int ip, int iu);
-int InsertSort(int* array, int ip, int iu);
-
+int QuickSort_min(int* array, int ip, int iu);
+int partition(int* array, int ip, int iu, int* pos, pfunc_pivot pivot);
+int pivot_min(int* array, int ip, int iu, int* pos);
 
 #endif
