@@ -83,7 +83,7 @@ int main(int argc, char** argv)
     }
 
     /* Sort the second copy with BubbleSort */
-    ret_Quick = QuickSort(perm_bubble, 0, tamano - 1);
+    /*ret_Quick = QuickSort(perm_bubble, 0, tamano - 1);*/
 
     if (ret_Merge == ERR) {
         printf("Error: Error in InsertSort\n");
@@ -105,13 +105,13 @@ int main(int argc, char** argv)
     printf("\nOB MergeSort: %d\n", ret_Merge);
 
     /* Print BubbleSort result */
-    printf("\nQuickSort:\n");
+    /*printf("\nQuickSort:\n");
 
     for (j = 0; j < tamano; j++) {
         printf("%d\t", perm_bubble[j]);
-    }
+    }*/
 
-    printf("\nOB QuickSortSort: %d\n", ret_Quick);
+    /*printf("\nOB QuickSortSort: %d\n", ret_Quick);*/
 
     /* Free memory */
     free(perm);

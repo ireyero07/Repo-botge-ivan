@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 
     snprintf(nombre_insert, sizeof(nombre_insert), "%s_insert.log", nombre);
 
-    snprintf(nombre_bubble, sizeof(nombre_bubble), "%s_bubble.log", nombre);
+    /*snprintf(nombre_bubble, sizeof(nombre_bubble), "%s_bubble.log", nombre);*/
 
     /*
      * Use the same seed for both algorithms so that
@@ -90,12 +90,12 @@ int main(int argc, char** argv)
     /* Generate measurements for BubbleSort */
     srand(seed);
 
-    ret = generate_sorting_times(QuickSort_min, nombre_bubble, num_min, num_max, incr, n_perms);
+    /*ret = generate_sorting_times(QuickSort_min, nombre_bubble, num_min, num_max, incr, n_perms);
 
     if (ret == ERR) {
         printf("Error in function generate_sorting_times for BubbleSort\n");
         exit(-1);
-    }
+    }*/
 
     printf("Correct output\n");
 

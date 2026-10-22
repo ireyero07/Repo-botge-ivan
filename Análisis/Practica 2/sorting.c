@@ -43,8 +43,8 @@ int MergeSort(int *array, int ip, int iu)
   else
   {
     h = (ip + iu) / 2;
-    OB = MergeSort(array, ip, iu);
-    OB += MergeSort(array, ip + 1, iu);
+    OB = MergeSort(array, ip, h);
+    OB += MergeSort(array, h + 1, iu);
   }
 
   OB += merge(array, ip, iu, h);
@@ -76,7 +76,7 @@ int merge(int *array, int ip, int iu, int im)
     return ERR;
   }
 
-  aux = (int *)malloc(sizeof(int) * iu - ip + 1);
+  aux = (int *)malloc(sizeof(int) * (iu - ip + 1));
   if (!aux)
   {
     return ERR;
@@ -84,7 +84,7 @@ int merge(int *array, int ip, int iu, int im)
 
   i = ip;
   j = im + 1;
-  k = ip;
+  k = 0;
 
   while (i <= im && j <= iu)
   {
@@ -101,26 +101,22 @@ int merge(int *array, int ip, int iu, int im)
     OB++;
     k++;
   }
-  if (i > im)
+
+  while (i <= im)
   {
-    while (j <= iu)
-    {
-      aux[k] = array[j];
-      j++;
-      k++;
-    }
-  }
-  else if (j < iu)
-  {
-    while (i <= im)
-    {
-      aux[k] = array[i];
-      i++;
-      k++;
-    }
+    aux[k] = array[i];
+    i++;
+    k++;
   }
 
-  for (q = ip, l= 0; q < iu; q++, l++)
+  while (j <= iu)
+  {
+    aux[k] = array[j];
+    j++;
+    k++;
+  }
+
+  for (q = ip, l = 0; q <= iu; q++, l++)
   {
     array[q] = aux[l];
   }
