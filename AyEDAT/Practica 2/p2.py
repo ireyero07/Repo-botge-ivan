@@ -16,21 +16,67 @@ def greedy_change(coins: List[int], amount: int) -> Tuple[List[int], int]:
     Estrategia codiciosa para el problema del cambio de monedas.
     Selecciona en cada paso la moneda de mayor valor que no supere la cantidad restante.
     """
-    pass
+    coins = sorted (coins, reverse=True)
+
+    used = []
+
+    for coin in coins:
+        while amount >= coin:
+            amount -=  coin
+            used.append (coin)
+    return used, amount
 
 def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     """
     Solución óptima mediante programación dinámica para el problema del cambio de monedas.
     Determina el menor número de monedas necesario para obtener la cantidad objetivo.
     """
-    pass
+    if amount == 0:
+        return []
+    
+    dp = [None] * (amount + 1)
+    dp[0] = []
+
+    for i in range(1, amount+1):
+        for coin in coins:
+            if coin < i and dp[i-coin] is  not None:
+                current = dp[i-coin] + coin
+                if dp[i] is None or len(current) < len(dp[i]):
+                    dp[i] = current
+    
+    return dp[amount]
 
 def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
     """
     Evalúa todas las cantidades entre 1 y max_amount, clasifica cada cantidad en
     'optimal', 'suboptimal', 'greedy_failed' o 'impossible'.
     """
-    pass
+
+    k = {
+    'optimal': [],
+    'suboptimal': [],
+    'greedy_failed': [],
+    'impossible': []
+    }
+
+    if max_amount == 0:
+        return []
+
+    for i in range (1, max_amount + 1):
+        g, amount = greedy_change(List,i)
+        o = optimal_change(List, i)
+        if amount == 0:
+            if len(g) == len(o):
+                k['optimal'].append[i]
+            else: 
+                k['suboptimal'].append[i]       
+        elif o != None:
+            k['greedy_failed'].append[i]
+        else: 
+            k['impossible'].append[i]
+
+    return k
+
 
 # =============================================================================
 # II. Selección de actividades
