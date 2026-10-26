@@ -33,18 +33,33 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     """
     if amount == 0:
         return []
-    
-    dp = [None] * (amount + 1)
-    dp[0] = []
 
-    for i in range(1, amount+1):
-        for coin in coins:
-            if coin < i and dp[i-coin] is  not None:
-                current = dp[i-coin] + coin
-                if dp[i] is None or len(current) < len(dp[i]):
-                    dp[i] = current
+    coins = sorted (coins, reverse=True)
+    l = len(List+1)
+    a = amount +1
     
-    return dp[amount]
+    m = [[0 for _ in range(a)]for _ in range(l)]
+
+    for i in range(1, l):
+        m[0][i] = float('inf')
+
+    for i in range(1,l):
+        
+        for j in range(1, a):
+            if (a < i):
+                m[i][j] = m[i-1] [j]
+            elif (a <= i):
+                m[i][j] = min(m[i-1][j], 1 + m[i][j-])
+            
+
+
+        
+
+
+
+
+    
+    pass
 
 def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
     """
@@ -87,6 +102,12 @@ def activity_selection(activities: List[Tuple[str, int, int]]) -> List[Tuple[str
     Selecciona el máximo número posible de actividades compatibles.
     Ordena por tiempo de finalización ascendente, y en caso de empate por inicio e identificador.
     """
+
+    l = []
+
+    
+
+
     pass
 
 def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
@@ -94,6 +115,9 @@ def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
     Genera n actividades aleatorias reproducibles.
     start en [0, 10000], duration en [1, 100], end = start + duration.
     """
+
+    for i in range(seed):
+        a
     pass
 
 # =============================================================================
@@ -105,7 +129,34 @@ def job_scheduling(jobs: List[Tuple[str, int, int]]) -> Tuple[List[Optional[Tupl
     Planificación de tareas de duración unitaria con fecha límite (deadline).
     Devuelve la secuencia de tareas asignadas (con None para intervalos vacíos) y el beneficio total.
     """
-    pass
+    if len(jobs) == 0:
+        return [], 0
+
+    # Ordenar por beneficio decreciente,
+    # deadline creciente e identificador creciente.
+    jobs_sorted = sorted(jobs, key=lambda job: (-job[1], job[2], job[0]))
+
+    # El calendario tendrá tantos intervalos como el mayor deadline.
+    max_deadline = max(job[2] for job in jobs)
+    schedule = [None] * max_deadline
+
+    total_profit = 0
+
+    # Procesar las tareas en el orden codicioso.
+    for job in jobs_sorted:
+        identifier, profit, deadline = job
+
+        # Buscar el último intervalo libre antes del deadline.
+        for i in range(deadline -1, -1, -1):
+            if schedule[i] is None:
+                schedule[i] = job
+                total_profit += profit
+                break
+
+    return schedule, total_profit
+
+
+    
 
 def generate_jobs(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
     """
