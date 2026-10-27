@@ -40,7 +40,7 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
 
     #Inicialización de la matriz primera fila = 0 y primera columna = inf
     m = [[0 for _ in range(a)]for _ in range(l)]
-    for i in range(1, l):
+    for i in range(1, a):
         m[0][i] = float('inf')
 
     # Calculo de la matriz
