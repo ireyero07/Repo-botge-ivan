@@ -34,50 +34,38 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     if amount == 0:
         return []
 
-    coins = sorted (coins, reverse=True)
-    l = len(coins)+1
-    a = amount +1
-
-    #Inicialización de la matriz primera fila = 0 y primera columna = inf
-    m = [[0 for _ in range(a)]for _ in range(l)]
-    for i in range(1, a):
-        m[0][i] = float('inf')
-
-    # Calculo de la matriz
-    for i in range(1, l):
-        c_i = coins[i - 1]
-        for x in range(1, a):
-            if x < c_i:
-                m[i][x] = m[i - 1][x]
-            else:
-                m[i][x] = min(m[i - 1][x], 1 + m[i][x - c_i])
-
-    if m[l - 1][amount] == float('inf'):
-        return None
-
-    #Búsqueda de la solución óptima
-    result = []
-    current_amount = amount
-    i = l - 1
+#     coins = sorted (coins, reverse=True)
+#     l = len(List+1)
+#     a = amount +1
     
-    while current_amount > 0 and i > 0:
-        c_i = coins[i - 1]
-        if m[i][current_amount] == m[i - 1][current_amount]:
-            i -= 1
-        else:
-            result.append(c_i)
-            current_amount -= c_i
+#     m = [[0 for _ in range(a)]for _ in range(l)]
 
-    return result
+#     for i in range(1, l):
+#         m[0][i] = float('inf')
 
+#     for i in range(1,l):
+        
+#         for j in range(1, a):
+#             if (a < i):
+#                 m[i][j] = m[i-1] [j]
+#             elif (a <= i):
+#                 m[i][j] = min(m[i-1][j], 1 + m[i][j-])
             
 
 
-def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
-    """
-    Evalúa todas las cantidades entre 1 y max_amount, clasifica cada cantidad en
-    'optimal', 'suboptimal', 'greedy_failed' o 'impossible'.
-    """
+        
+
+
+
+
+    
+#     pass
+
+# def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
+#     """
+#     Evalúa todas las cantidades entre 1 y max_amount, clasifica cada cantidad en
+#     'optimal', 'suboptimal', 'greedy_failed' o 'impossible'.
+#     """
 
     k = {
     'optimal': [],
@@ -116,38 +104,22 @@ def activity_selection(activities: List[Tuple[str, int, int]]) -> List[Tuple[str
     Ordena por tiempo de finalización ascendente, y en caso de empate por inicio e identificador.
     """
 
-    sorted_activities = sorted(activities, key=lambda x: (x[2], x[1], x[0]))
-    e = []
-    l = -1
+    l = []
+
     
-    for actividad in sorted_activities:
-        identifier, start, end = actividad
-        if start >= l:
-            e.append(actividad)
-            l = end
-            
-    return e
 
 
+    pass
 
-def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
-    """
-    Genera n actividades aleatorias reproducibles.
-    start en [0, 10000], duration en [1, 100], end = start + duration.
-    """
-    random.seed(seed)
+# def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
+#     """
+#     Genera n actividades aleatorias reproducibles.
+#     start en [0, 10000], duration en [1, 100], end = start + duration.
+#     """
 
-    activities = []
-
-    for i in range(n):
-        id = f"A{i}"
-        start = random.randint(0, 10000)
-        duration = random.randint(1, 100)
-        end = start + duration
-        activities.append((id, start, end))
-
-    return activities
-
+#     for i in range(seed):
+#         a
+#     pass
 
 # =============================================================================
 # III. Planificación de tareas con fechas límite
