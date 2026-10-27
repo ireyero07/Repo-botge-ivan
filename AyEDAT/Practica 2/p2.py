@@ -11,45 +11,45 @@ import random
 # I. Problema del cambio de monedas
 # =============================================================================
 
-def greedy_change(coins: List[int], amount: int) -> Tuple[List[int], int]:
-    """
-    Estrategia codiciosa para el problema del cambio de monedas.
-    Selecciona en cada paso la moneda de mayor valor que no supere la cantidad restante.
-    """
-    coins = sorted (coins, reverse=True)
+# def greedy_change(coins: List[int], amount: int) -> Tuple[List[int], int]:
+#     """
+#     Estrategia codiciosa para el problema del cambio de monedas.
+#     Selecciona en cada paso la moneda de mayor valor que no supere la cantidad restante.
+#     """
+#     coins = sorted (coins, reverse=True)
 
-    used = []
+#     used = []
 
-    for coin in coins:
-        while amount >= coin:
-            amount -=  coin
-            used.append (coin)
-    return used, amount
+#     for coin in coins:
+#         while amount >= coin:
+#             amount -=  coin
+#             used.append (coin)
+#     return used, amount
 
-def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
-    """
-    Solución óptima mediante programación dinámica para el problema del cambio de monedas.
-    Determina el menor número de monedas necesario para obtener la cantidad objetivo.
-    """
-    if amount == 0:
-        return []
+# def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
+#     """
+#     Solución óptima mediante programación dinámica para el problema del cambio de monedas.
+#     Determina el menor número de monedas necesario para obtener la cantidad objetivo.
+#     """
+#     if amount == 0:
+#         return []
 
-    coins = sorted (coins, reverse=True)
-    l = len(List+1)
-    a = amount +1
+#     coins = sorted (coins, reverse=True)
+#     l = len(List+1)
+#     a = amount +1
     
-    m = [[0 for _ in range(a)]for _ in range(l)]
+#     m = [[0 for _ in range(a)]for _ in range(l)]
 
-    for i in range(1, l):
-        m[0][i] = float('inf')
+#     for i in range(1, l):
+#         m[0][i] = float('inf')
 
-    for i in range(1,l):
+#     for i in range(1,l):
         
-        for j in range(1, a):
-            if (a < i):
-                m[i][j] = m[i-1] [j]
-            elif (a <= i):
-                m[i][j] = min(m[i-1][j], 1 + m[i][j-])
+#         for j in range(1, a):
+#             if (a < i):
+#                 m[i][j] = m[i-1] [j]
+#             elif (a <= i):
+#                 m[i][j] = min(m[i-1][j], 1 + m[i][j-])
             
 
 
@@ -59,38 +59,38 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
 
 
     
-    pass
+#     pass
 
-def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
-    """
-    Evalúa todas las cantidades entre 1 y max_amount, clasifica cada cantidad en
-    'optimal', 'suboptimal', 'greedy_failed' o 'impossible'.
-    """
+# def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
+#     """
+#     Evalúa todas las cantidades entre 1 y max_amount, clasifica cada cantidad en
+#     'optimal', 'suboptimal', 'greedy_failed' o 'impossible'.
+#     """
 
-    k = {
-    'optimal': [],
-    'suboptimal': [],
-    'greedy_failed': [],
-    'impossible': []
-    }
+#     k = {
+#     'optimal': [],
+#     'suboptimal': [],
+#     'greedy_failed': [],
+#     'impossible': []
+#     }
 
-    if max_amount == 0:
-        return []
+#     if max_amount == 0:
+#         return []
 
-    for i in range (1, max_amount + 1):
-        g, amount = greedy_change(List,i)
-        o = optimal_change(List, i)
-        if amount == 0:
-            if len(g) == len(o):
-                k['optimal'].append[i]
-            else: 
-                k['suboptimal'].append[i]       
-        elif o != None:
-            k['greedy_failed'].append[i]
-        else: 
-            k['impossible'].append[i]
+#     for i in range (1, max_amount + 1):
+#         g, amount = greedy_change(List,i)
+#         o = optimal_change(List, i)
+#         if amount == 0:
+#             if len(g) == len(o):
+#                 k['optimal'].append[i]
+#             else: 
+#                 k['suboptimal'].append[i]       
+#         elif o != None:
+#             k['greedy_failed'].append[i]
+#         else: 
+#             k['impossible'].append[i]
 
-    return k
+#     return k
 
 
 # =============================================================================
@@ -110,15 +110,15 @@ def activity_selection(activities: List[Tuple[str, int, int]]) -> List[Tuple[str
 
     pass
 
-def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
-    """
-    Genera n actividades aleatorias reproducibles.
-    start en [0, 10000], duration en [1, 100], end = start + duration.
-    """
+# def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
+#     """
+#     Genera n actividades aleatorias reproducibles.
+#     start en [0, 10000], duration en [1, 100], end = start + duration.
+#     """
 
-    for i in range(seed):
-        a
-    pass
+#     for i in range(seed):
+#         a
+#     pass
 
 # =============================================================================
 # III. Planificación de tareas con fechas límite
@@ -131,22 +131,17 @@ def job_scheduling(jobs: List[Tuple[str, int, int]]) -> Tuple[List[Optional[Tupl
     """
     if len(jobs) == 0:
         return [], 0
-
-    # Ordenar por beneficio decreciente,
-    # deadline creciente e identificador creciente.
+    
     jobs_sorted = sorted(jobs, key=lambda job: (-job[1], job[2], job[0]))
 
-    # El calendario tendrá tantos intervalos como el mayor deadline.
     max_deadline = max(job[2] for job in jobs)
     schedule = [None] * max_deadline
 
     total_profit = 0
 
-    # Procesar las tareas en el orden codicioso.
     for job in jobs_sorted:
         identifier, profit, deadline = job
 
-        # Buscar el último intervalo libre antes del deadline.
         for i in range(deadline -1, -1, -1):
             if schedule[i] is None:
                 schedule[i] = job
@@ -156,11 +151,20 @@ def job_scheduling(jobs: List[Tuple[str, int, int]]) -> Tuple[List[Optional[Tupl
     return schedule, total_profit
 
 
-    
-
 def generate_jobs(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
     """
     Genera n tareas aleatorias con fecha límite reproducibles.
     profit en [1, 1000], deadline en [1, max(1, n // 10)].
     """
-    pass
+
+    random.seed(seed)
+    jobs = []
+    max_deadline = max(1, n // 10)
+    
+    for i in range(n):
+        identifier = f"J{i}"
+        profit = random.randint(1, 1000)
+        deadline = random.randint(1, max_deadline)
+        jobs.append((identifier, profit, deadline))
+        
+    return jobs
