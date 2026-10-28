@@ -21,8 +21,8 @@
 /*  while sorting the list                         */
 /* Input:                                          */
 /* int *array: Array with permutations             */
-/* int ip: index of first position  			         */
-/* int iu: index of last position			             */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
 /* Output:                                         */
 /* int: Number of times the basic operation has    */
 /*  been made                                      */
@@ -59,9 +59,9 @@ int MergeSort(int *array, int ip, int iu)
 /*                                                 */
 /* Input:                                          */
 /* int *array: Array with permutations             */
-/* int ip: index of first position  			         */
-/* int iu: index of last position			             */
-/* int im: index of last position of the left 		 */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
 /* partition                                       */
 /* Output:                                         */
 /* int: Number of times the basic operation has    */
@@ -133,9 +133,9 @@ int merge(int *array, int ip, int iu, int im)
 /*                                                 */
 /* Input:                                          */
 /* int *array: Array with permutations             */
-/* int ip: index of first position  			         */
-/* int iu: index of last position			             */
-/* int im: index of last position of the left 		 */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
 /* partition                                       */
 /* Output:                                         */
 /* int: Number of times the basic operation has    */
@@ -143,7 +143,41 @@ int merge(int *array, int ip, int iu, int im)
 /***************************************************/
 int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 {
-  return -1;
+  int i, m, count, key, temp, pivot_count;
+
+  if (array == NULL || pos == NULL || pivot == NULL || ip < 0 || ip > iu)
+    return ERR;
+
+  pivot_count = pivot(array, ip, iu, pos);
+
+  if (pivot_count == ERR || *pos < ip || *pos > iu)
+    return ERR;
+
+  temp = array[ip];
+  array[ip] = array[*pos];
+  array[*pos] = temp;
+
+  key = array[ip];
+  m = ip;
+  count = pivot_count;
+
+  for (i = ip + 1; i <= iu; i++) {
+    count++;
+    if (array[i] < key) {
+      m++;
+      temp = array[m];
+      array[m] = array[i];
+      array[i] = temp;
+    }
+  }
+
+  temp = array[ip];
+  array[ip] = array[m];
+  array[m] = temp;
+
+  *pos = m;
+
+  return count;
 }
 
 /***************************************************/
@@ -154,9 +188,9 @@ int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 /*                                                 */
 /* Input:                                          */
 /* int *array: Array with permutations             */
-/* int ip: index of first position  			         */
-/* int iu: index of last position			             */
-/* int im: index of last position of the left 		 */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
 /* partition                                       */
 /* Output:                                         */
 /* int: Number of times the basic operation has    */
@@ -164,32 +198,37 @@ int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 /***************************************************/
 int QuickSort_min(int *array, int ip, int iu)
 {
-  int m;
-  int *pos = NULL;
-  if (!array || ip < 0 || ip > iu)
+  int pos, count, left_count, right_count;
+  if (!array || ip < 0)
   {
     return ERR;
   }
 
-  if (ip == iu)
+  if (ip >= iu)
   {
     return OK;
   }
 
-  else
+  count = partition(array, ip, iu, &pos, pivot_min);
+
+  if (count == ERR)
   {
-    m = partition(array, ip, iu, pos, pivot_min);
-    if (ip < m - 1)
-    {
-      QuickSort_min(array, ip, m - 1);
-    }
-    else if (m + 1 < iu)
-    {
-      QuickSort_min(array, m + 1, iu);
-    }
+    return ERR;
   }
 
-  return OK;
+  left_count = QuickSort_min(array, ip, pos - 1);
+  if (left_count == ERR)
+  {
+    return ERR;
+  }
+
+  right_count = QuickSort_min(array, pos + 1, iu);
+  if (right_count == ERR)
+  {
+    return ERR;
+  }
+
+  return count + left_count + right_count;
 }
 
 /***************************************************/
@@ -200,9 +239,81 @@ int QuickSort_min(int *array, int ip, int iu)
 /*                                                 */
 /* Input:                                          */
 /* int *array: Array with permutations             */
-/* int ip: index of first position  			         */
-/* int iu: index of last position			             */
-/* int im: index of last position of the left 		 */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
+/* partition                                       */
+/* Output:                                         */
+/* int: Number of times the basic operation has    */
+/*  been made                                      */
+/***************************************************/
+int QuickSort_mean(int* array, int ip, int iu)
+{
+  int m, pos, count, left_count, right_count;
+  if (!array || ip < 0)
+  {
+    return ERR;
+  }
+
+  if (ip >= iu)
+  {
+    return OK;
+  }
+
+  count = partition(array, ip, iu, &pos, pivot_mean);
+
+  if (count == ERR)
+  {
+    return ERR;
+  }
+
+  left_count = QuickSort_min(array, ip, pos - 1);
+  if (left_count == ERR)
+  {
+    return ERR;
+  }
+
+  right_count = QuickSort_min(array, pos + 1, iu);
+  if (right_count == ERR)
+  {
+    return ERR;
+  }
+
+  return count + left_count + right_count;
+}
+
+/***************************************************/
+/* Function: Merge         Date:29/09/2026         */
+/* Authors: Jorge Torrijos                         */
+/*                                                 */
+/* Subfunction to sort the list                    */
+/*                                                 */
+/* Input:                                          */
+/* int *array: Array with permutations             */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
+/* partition                                       */
+/* Output:                                         */
+/* int: Number of times the basic operation has    */
+/*  been made                                      */
+/***************************************************/
+int QuickSort_median(int* array, int ip, int iu)
+{
+
+}
+
+/***************************************************/
+/* Function: Merge         Date:29/09/2026         */
+/* Authors: Jorge Torrijos                         */
+/*                                                 */
+/* Subfunction to sort the list                    */
+/*                                                 */
+/* Input:                                          */
+/* int *array: Array with permutations             */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
 /* partition                                       */
 /* Output:                                         */
 /* int: Number of times the basic operation has    */
@@ -210,5 +321,58 @@ int QuickSort_min(int *array, int ip, int iu)
 /***************************************************/
 int pivot_min(int *array, int ip, int iu, int *pos)
 {
-  return 1;
+  if (array == NULL || pos == NULL || ip < 0 || ip > iu)
+    return ERR;
+
+  *pos = ip;
+
+  return 0;
+}
+
+/***************************************************/
+/* Function: Merge         Date:29/09/2026         */
+/* Authors: Jorge Torrijos                         */
+/*                                                 */
+/* Subfunction to sort the list                    */
+/*                                                 */
+/* Input:                                          */
+/* int *array: Array with permutations             */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
+/* partition                                       */
+/* Output:                                         */
+/* int: Number of times the basic operation has    */
+/*  been made                                      */
+/***************************************************/
+int pivot_mean(int* array, int ip, int iu, int* pos)
+{
+    if (array == NULL || pos == NULL || ip < 0 || ip > iu)
+    return ERR;
+
+  *pos = ip + (iu - ip) / 2;
+
+  return 0;
+}
+
+
+/***************************************************/
+/* Function: Merge         Date:29/09/2026         */
+/* Authors: Jorge Torrijos                         */
+/*                                                 */
+/* Subfunction to sort the list                    */
+/*                                                 */
+/* Input:                                          */
+/* int *array: Array with permutations             */
+/* int ip: index of first position                 */
+/* int iu: index of last position                  */
+/* int im: index of last position of the left      */
+/* partition                                       */
+/* Output:                                         */
+/* int: Number of times the basic operation has    */
+/*  been made                                      */
+/***************************************************/
+int pivot_median(int* array, int ip, int iu, int* pos)
+{
+
 }
