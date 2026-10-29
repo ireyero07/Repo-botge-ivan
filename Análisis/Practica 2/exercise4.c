@@ -1,13 +1,14 @@
 /**************************************************/
-/* Programa: ejercise4       Date:                */
-/* Authors:                                       */
+/* Programa: exercise4                            */
+/* Authors: Jorge Torrijos e Ivan Reyero          */
 /*                                                */
-/* Program that checks InsertSort                 */
+/* Program that checks QuickSort_median           */
 /*                                                */
 /* Input: Command Line                            */
-/* -size: number of elements of each permutation  */
-/* Output: 0: OK, -1: ERR                         */
+/* -size: number of elements in the permutation   */
+/* Output: Sorted permutation and number of OB    */
 /**************************************************/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -15,109 +16,58 @@
 #include "permutations.h"
 #include "sorting.h"
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    int tamano, i, j;
-    int ret_Merge, ret_Quick;
+    int tamano, i, ret_Quick;
     int *perm = NULL;
-    int *perm_insert = NULL;
-    int *perm_bubble = NULL;
 
     srand(time(NULL));
 
-    if (argc != 3) {
-        fprintf(stderr, "Error in input parameters:\n\n");
+    if (argc != 3 || strcmp(argv[1], "-size") != 0) {
+        fprintf(stderr, "Error in input parameters:\n");
         fprintf(stderr, "%s -size <int>\n", argv[0]);
-        fprintf(stderr, "Where:\n");
-        fprintf(stderr, " -size : number of elements in the permutation.\n");
-        return 0;
+        return ERR;
     }
-    printf("Practice number 1, section 4\n");
+
+    tamano = atoi(argv[2]);
+
+    if (tamano <= 0) {
+        fprintf(stderr, "Error: size must be positive\n");
+        return ERR;
+    }
+
+    printf("Practice number 2, section 4\n");
     printf("Done by: Ivan Reyero y Jorge Torrijos\n");
     printf("Group: 1261-10\n");
 
-    /* check command line */
-    for(i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-size") == 0) {
-            tamano = atoi(argv[++i]);
-        } else {
-            fprintf(stderr, "Wrong paramenter %s\n", argv[i]);
-        }
-    }
-
     perm = generate_perm(tamano);
 
-    if (perm == NULL) { /* error */
-        printf("Error: Out of memory\n");
-        exit(-1);
+    if (perm == NULL) {
+        fprintf(stderr, "Error: Out of memory\n");
+        return ERR;
     }
 
-    perm_insert = (int *)malloc(tamano * sizeof(int));
-    perm_bubble = (int *)malloc(tamano * sizeof(int));
-
-    if (perm_insert == NULL || perm_bubble == NULL) {
-        printf("Error: Out of memory\n");
-
-        free(perm);
-        free(perm_insert);
-        free(perm_bubble);
-
-        exit(-1);
-    }
-
+    printf("\nOriginal permutation:\n");
     for (i = 0; i < tamano; i++) {
-        perm_insert[i] = perm[i];
-        perm_bubble[i] = perm[i];
+        printf("%d\t", perm[i]);
     }
 
-    ret_Merge = MergeSort(perm_insert, 0, tamano - 1);
+    ret_Quick = QuickSort_median(perm, 0, tamano - 1);
 
-    if (ret_Merge == ERR) {
-        printf("Error: Error in InsertSort\n");
-
+    if (ret_Quick == ERR) {
+        fprintf(stderr, "\nError in QuickSort_median\n");
         free(perm);
-        free(perm_insert);
-        free(perm_bubble);
-
-        exit(-1);
+        return ERR;
     }
 
-    /* Sort the second copy with BubbleSort */
-    /*ret_Quick = QuickSort(perm_bubble, 0, tamano - 1);*/
-
-    if (ret_Merge == ERR) {
-        printf("Error: Error in InsertSort\n");
-
-        free(perm);
-        free(perm_insert);
-        free(perm_bubble);
-
-        exit(-1);
+    printf("\n\nQuickSort_median:\n");
+    for (i = 0; i < tamano; i++) {
+        printf("%d\t", perm[i]);
     }
 
-    /* Print InsertSort result */
-    printf("\nMergeSort:\n");
+    printf("\nOB QuickSort_median: %d\n", ret_Quick);
 
-    for (j = 0; j < tamano; j++) {
-        printf("%d\t", perm_insert[j]);
-    }
-
-    printf("\nOB MergeSort: %d\n", ret_Merge);
-
-    /* Print BubbleSort result */
-    /*printf("\nQuickSort:\n");
-
-    for (j = 0; j < tamano; j++) {
-        printf("%d\t", perm_bubble[j]);
-    }*/
-
-    /*printf("\nOB QuickSortSort: %d\n", ret_Quick);*/
-
-    /* Free memory */
     free(perm);
-    free(perm_insert);
-    free(perm_bubble);
 
     return 0;
 }
-

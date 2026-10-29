@@ -245,7 +245,7 @@ int QuickSort_min(int *array, int ip, int iu)
 /***************************************************/
 int QuickSort_mean(int* array, int ip, int iu)
 {
-  int m, pos, count, left_count, right_count;
+  int pos, count, left_count, right_count;
   if (!array || ip < 0)
   {
     return ERR;

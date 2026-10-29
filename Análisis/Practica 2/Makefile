@@ -5,7 +5,7 @@
 
 CC = gcc -ansi -pedantic
 CFLAGS = -Wall -std=c99
-EXE = exercise1 exercise2 exercise3 exercise4 exercise5
+EXE = exercise4 exercise5
 
 all : $(EXE)
 
@@ -40,24 +40,11 @@ sorting.o : sorting.c sorting.h
 	@echo "# Depepends on $^"
 	@echo "# Has changed $<"
 	$(CC) $(CFLAGS) -c $<
-	
-exercise1_test:
-	@echo Running exercise1
-	@./exercise1 -limInf 1 -limSup 5 -numN 1000
-
-exercise2_test:
-	@echo Running exercise2
-	@./exercise2 -size 5 -numP 20
-
-exercise3_test:
-	@echo Running exercise3
-	@./exercise3 -size 5 -numP 5
 
 exercise4_test:
 	@echo Running exercise4
-	@./exercise4 -size 9
+	@./exercise4 -size 10
 
 exercise5_test:
 	@echo Running exercise5
 	@./exercise5 -num_min 1000 -num_max 10000 -incr 1000 -numP 100 -outputFile exercise5.log
-
