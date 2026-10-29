@@ -14,7 +14,7 @@
 #include "string.h"
 
 /***************************************************/
-/* Function: MergeSort     Date:29/09/2026         */
+/* Function: MergeSort         Date:21/10/2026     */
 /* Authors: Jorge Torrijos                         */
 /*                                                 */
 /* Function that  sorts a list via merging while   */
@@ -52,7 +52,7 @@ int MergeSort(int *array, int ip, int iu)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
+/* Function: Merge             Date:28/10/2026     */
 /* Authors: Jorge Torrijos                         */
 /*                                                 */
 /* Subfunction to merge the list                   */
@@ -126,20 +126,20 @@ int merge(int *array, int ip, int iu, int im)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: partition         Date:21/10/2026     */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Partitions the array segment around a pivot     */
+/* chosen by the 'pivot' function strategy.        */
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array to be partitioned             */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
+/* int *pos: Pointer to store the final pivot index*/
+/* pfunc_pivot pivot: Function pointer to selector */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Total basic operations (OB) performed      */
 /***************************************************/
 int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 {
@@ -181,20 +181,18 @@ int partition(int *array, int ip, int iu, int *pos, pfunc_pivot pivot)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: QuickSort_min     Date:21/10/2026     */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Sorts the array segment using QuickSort         */
+/* selecting the first element as the pivot.       */
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array to be sorted                  */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Total basic operations (OB) performed      */
 /***************************************************/
 int QuickSort_min(int *array, int ip, int iu)
 {
@@ -232,20 +230,18 @@ int QuickSort_min(int *array, int ip, int iu)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: QuickSort_mean     Date:28/10/2026    */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Sorts the array segment using QuickSort         */
+/* selecting the middle element as the pivot.      */
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array to be sorted                  */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Total basic operations (OB) performed      */
 /***************************************************/
 int QuickSort_mean(int* array, int ip, int iu)
 {
@@ -283,20 +279,18 @@ int QuickSort_mean(int* array, int ip, int iu)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: QuickSort_median     Date:28/10/2026  */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Sorts the array segment using QuickSort         */
+/* selecting the median of three elements as pivot.*/
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array to be sorted                  */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Total basic operations (OB) performed      */
 /***************************************************/
 int QuickSort_median(int* array, int ip, int iu)
 {
@@ -334,20 +328,19 @@ int QuickSort_median(int* array, int ip, int iu)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: pivot_min         Date:21/10/2026     */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Selects the first index of the segment as pivot.*/
+/* Does not perform key comparisons.               */
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array of elements                   */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
+/* int *pos: Pointer to store the selected index   */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Number of key comparisons (always 0)       */
 /***************************************************/
 int pivot_min(int *array, int ip, int iu, int *pos)
 {
@@ -360,20 +353,19 @@ int pivot_min(int *array, int ip, int iu, int *pos)
 }
 
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: pivot_mean        Date:28/10/2026     */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Selects the middle index of the segment as pivot*/
+/* preventing integer overflow. No comparisons.    */
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array of elements                   */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
+/* int *pos: Pointer to store the selected index   */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Number of key comparisons (always 0)       */
 /***************************************************/
 int pivot_mean(int* array, int ip, int iu, int* pos)
 {
@@ -385,26 +377,66 @@ int pivot_mean(int* array, int ip, int iu, int* pos)
   return 0;
 }
 
-
 /***************************************************/
-/* Function: Merge         Date:29/09/2026         */
-/* Authors: Jorge Torrijos                         */
+/* Function: pivot_median      Date:28/10/2026     */
+/* Authors: Iván Reyero                            */
 /*                                                 */
-/* Subfunction to sort the list                    */
+/* Selects as pivot the median value between the   */
+/* first, middle, and last elements of the segment.*/
 /*                                                 */
 /* Input:                                          */
-/* int *array: Array with permutations             */
-/* int ip: index of first position                 */
-/* int iu: index of last position                  */
-/* int im: index of last position of the left      */
-/* partition                                       */
+/* int *array: Array of elements                   */
+/* int ip: Index of the first position             */
+/* int iu: Index of the last position              */
+/* int *pos: Pointer to store the selected index   */
 /* Output:                                         */
-/* int: Number of times the basic operation has    */
-/*  been made                                      */
+/* int: Number of key comparisons performed (2-3)  */
 /***************************************************/
 int pivot_median(int* array, int ip, int iu, int* pos)
 {
+  int medio;
+  int comps = 0;
+
   if (array == NULL || pos == NULL || ip < 0 || ip > iu)
     return ERR;
 
+  medio = ip + (iu - ip) / 2;
+
+  comps++;
+  if (array[ip] < array[medio]) {
+    comps++;
+
+    if (array[medio] < array[iu]) {
+      *pos = medio;
+
+    } else {
+      comps++;
+
+      if (array[ip] < array[iu]) {
+        *pos = iu;
+
+      } else {
+        *pos = ip;
+      }
+    }
+
+  } else {
+    comps++;
+
+    if (array[iu] < array[medio]) {
+      *pos = medio;
+
+    } else {
+      comps++;
+
+      if (array[iu] < array[ip]) {
+        *pos = iu;
+
+      } else {
+        *pos = ip;
+      }
+    }
+  }
+
+  return comps;
 }
