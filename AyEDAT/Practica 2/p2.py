@@ -34,9 +34,9 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     if amount == 0:
         return []
 
-    coins = sorted (coins, reverse=True)
-    l = len(coins)+1
-    a = amount +1
+    coins = sorted (coins)
+    l = len(coins) + 1
+    a = amount + 1
 
     #Inicialización de la matriz primera fila = 0 y primera columna = inf
     m = [[0 for _ in range(a)]for _ in range(l)]
@@ -59,14 +59,16 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     result = []
     current_amount = amount
     i = l - 1
-    
+
     while current_amount > 0 and i > 0:
         c_i = coins[i - 1]
-        if m[i][current_amount] == m[i - 1][current_amount]:
-            i -= 1
-        else:
+        if m[i][current_amount] != m[i - 1][current_amount] and m[i][current_amount] == 1 + m[i][current_amount - c_i]:
             result.append(c_i)
             current_amount -= c_i
+        else:
+            i -= 1
+
+    return sorted(result, reverse=True)
 
     return result
 
@@ -87,7 +89,7 @@ def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
     }
 
     if max_amount == 0:
-        return []
+        return k
 
     for i in range (1, max_amount + 1):
         g, amount = greedy_change(List,i)
