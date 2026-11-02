@@ -71,7 +71,6 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
 
     return sorted(result, reverse=True)
 
-    return result
 
 def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
     """
