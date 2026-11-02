@@ -22,8 +22,9 @@ def greedy_change(coins: List[int], amount: int) -> Tuple[List[int], int]:
 
     for coin in coins:
         while amount >= coin:
-            amount -=  coin
+            amount -= coin
             used.append (coin)
+
     return used, amount
 
 def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
@@ -46,11 +47,11 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     # Calculo de la matriz
     for i in range(1, l):
         c_i = coins[i - 1]
-        for x in range(1, a):
-            if x < c_i:
-                m[i][x] = m[i - 1][x]
-            else:
-                m[i][x] = min(m[i - 1][x], 1 + m[i][x - c_i])
+    for x in range(1, a):
+        if x < c_i:
+            m[i][x] = m[i - 1][x]
+    else:
+        m[i][x] = min(m[i - 1][x], 1 + m[i][x - c_i])
 
     if m[l - 1][amount] == float('inf'):
         return None
@@ -71,9 +72,6 @@ def optimal_change(coins: List[int], amount: int) -> Optional[List[int]]:
     return sorted(result, reverse=True)
 
     return result
-
-            
-
 
 def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
     """
@@ -97,13 +95,12 @@ def compare_change(coins: List[int], max_amount: int) -> Dict[str, List[int]]:
         if amount == 0:
             if len(g) == len(o):
                 k['optimal'].append(i)
-            else: 
-                k['suboptimal'].append[i]       
+            else:
+                k['suboptimal'].append[i]
         elif o != None:
             k['greedy_failed'].append[i]
-        else: 
+        else:
             k['impossible'].append[i]
-            
 
     return k
 
@@ -121,16 +118,14 @@ def activity_selection(activities: List[Tuple[str, int, int]]) -> List[Tuple[str
     sorted_activities = sorted(activities, key=lambda x: (x[2], x[1], x[0]))
     e = []
     l = -1
-    
+
     for actividad in sorted_activities:
         identifier, start, end = actividad
         if start >= l:
             e.append(actividad)
-            l = end
-            
+        l = end
+
     return e
-
-
 
 def generate_activities(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
     """
@@ -162,7 +157,7 @@ def job_scheduling(jobs: List[Tuple[str, int, int]]) -> Tuple[List[Optional[Tupl
     """
     if len(jobs) == 0:
         return [], 0
-    
+
     jobs_sorted = sorted(jobs, key=lambda job: (-job[1], job[2], job[0]))
 
     max_deadline = max(job[2] for job in jobs)
@@ -173,11 +168,11 @@ def job_scheduling(jobs: List[Tuple[str, int, int]]) -> Tuple[List[Optional[Tupl
     for job in jobs_sorted:
         identifier, profit, deadline = job
 
-        for i in range(deadline -1, -1, -1):
-            if schedule[i] is None:
-                schedule[i] = job
-                total_profit += profit
-                break
+    for i in range(deadline -1, -1, -1):
+        if schedule[i] is None:
+            schedule[i] = job
+            total_profit += profit
+            break
 
     return schedule, total_profit
 
@@ -191,11 +186,11 @@ def generate_jobs(n: int, seed: int = 42) -> List[Tuple[str, int, int]]:
     random.seed(seed)
     jobs = []
     max_deadline = max(1, n // 10)
-    
+
     for i in range(n):
         identifier = f"J{i}"
         profit = random.randint(1, 1000)
         deadline = random.randint(1, max_deadline)
         jobs.append((identifier, profit, deadline))
-        
+
     return jobs
