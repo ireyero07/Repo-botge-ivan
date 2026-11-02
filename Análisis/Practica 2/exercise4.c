@@ -52,20 +52,20 @@ int main(int argc, char **argv)
         printf("%d\t", perm[i]);
     }
 
-    ret_Quick = QuickSort_median(perm, 0, tamano - 1);
+    ret_Quick = MergeSort(perm, 0, tamano - 1);
 
     if (ret_Quick == ERR) {
-        fprintf(stderr, "\nError in QuickSort_median\n");
+        fprintf(stderr, "\nError in MergeSort\n");
         free(perm);
         return ERR;
     }
 
-    printf("\n\nQuickSort_median:\n");
+    printf("\n\nMergeSort:\n");
     for (i = 0; i < tamano; i++) {
         printf("%d\t", perm[i]);
     }
 
-    printf("\nOB QuickSort_median: %d\n", ret_Quick);
+    printf("\nOB MergeSort: %d\n", ret_Quick);
 
     free(perm);
 

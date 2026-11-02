@@ -67,7 +67,7 @@ int main(int argc, char** argv)
         }
     }
 
-    snprintf(nombre_insert, sizeof(nombre_insert), "%s_insert.log", nombre);
+    snprintf(nombre_insert, sizeof(nombre_insert), "%s_merge_sort.log", nombre);
 
     /*snprintf(nombre_bubble, sizeof(nombre_bubble), "%s_bubble.log", nombre);*/
 
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
     ret = generate_sorting_times(MergeSort, nombre_insert, num_min, num_max, incr, n_perms);
 
     if (ret == ERR) {
-        printf("Error in function generate_sorting_times for InsertSort\n");
+        printf("Error in function generate_sorting_times for MergeSort\n");
         exit(-1);
     }
 
