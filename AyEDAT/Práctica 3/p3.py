@@ -102,7 +102,23 @@ def min_path_recursive(grid: list[list[int]], i: int, j: int) -> int:
     :param j: Índice de la columna de la celda destino.
     :return: Coste acumulado mínimo para llegar a la celda (i, j).
     """
-    pass
+    # Caso base 1: celda de inicio (0, 0)
+    if i == 0 and j == 0:
+        return grid[0][0]
+    
+    # Caso base 2: borde superior (solo se puede venir desde la izquierda)
+    if i == 0:
+        return grid[i][j] + min_path_recursive(grid, i, j - 1)
+    
+    # Caso base 3: borde izquierdo (solo se puede venir desde arriba)
+    if j == 0:
+        return grid[i][j] + min_path_recursive(grid, i - 1, j)
+    
+    # Caso general: elegimos el camino más barato entre venir de arriba o de la izquierda
+    coste_arriba = min_path_recursive(grid, i - 1, j)
+    coste_izquierda = min_path_recursive(grid, i, j - 1)
+    
+    return grid[i][j] + min(coste_arriba, coste_izquierda)
 
 # II.B Programación Dinámica (Enfoque Bottom-Up)
 
@@ -114,7 +130,30 @@ def min_path_dp(grid: list[list[int]]) -> tuple[int, list[list[int]]]:
     :param grid: Matriz de costes de dimensiones N x M.
     :return: Tupla con el coste mínimo global (int) y la matriz dp de costes acumulados.
     """
-    pass
+    N = len(grid)
+    M = len(grid[0])
+    
+    # 1. Creamos una matriz N x M rellena de ceros
+    dp = [[0 for _ in range(M)] for _ in range(N)]
+    
+    # 2. Caso base: esquina superior izquierda
+    dp[0][0] = grid[0][0]
+    
+    # 3a. Rellenamos la primera fila (solo se puede venir desde la izquierda)
+    for j in range(1, M):
+        dp[0][j] = dp[0][j - 1] + grid[0][j]
+        
+    # 3b. Rellenamos la primera columna (solo se puede venir desde arriba)
+    for i in range(1, N):
+        dp[i][0] = dp[i - 1][0] + grid[i][0]
+        
+    # 4. Rellenamos el resto de la matriz fila por fila
+    for i in range(1, N):
+        for j in range(1, M):
+            dp[i][j] = grid[i][j] + min(dp[i - 1][j], dp[i][j - 1])
+            
+    # Devolvemos el coste mínimo final (esquina inferior derecha) y la tabla dp completa
+    return dp[N - 1][M - 1], dp
 
 # II.C Reconstrucción de la Ruta Óptima
 
@@ -128,7 +167,38 @@ def get_optimal_path(grid: list[list[int]]) -> tuple[int, list[tuple[int, int]]]
     :param grid: Matriz original de costes.
     :return: Tupla con el coste total mínimo y la lista de coordenadas (i, j) de la ruta.
     """
-    pass
+    # 1. Llamamos a la función del apartado II.B para obtener el coste mínimo y la matriz dp
+    min_cost, dp = min_path_dp(grid)
+    
+    N = len(grid)
+    M = len(grid[0])
+    
+    # 2. Empezamos desde la esquina inferior derecha (destino)
+    i = N - 1
+    j = M - 1
+    path = [(i, j)]
+    
+    # 3. Retrocedemos hasta llegar al origen (0, 0)
+    while i > 0 or j > 0:
+        if i == 0:
+            # En el borde superior, solo pudimos venir de la izquierda
+            j -= 1
+        elif j == 0:
+            # En el borde izquierdo, solo pudimos venir de arriba
+            i -= 1
+        else:
+            # En el interior, retrocedemos hacia el vecino con menor coste acumulado en dp
+            if dp[i - 1][j] < dp[i][j - 1]:
+                i -= 1
+            else:
+                j -= 1
+        
+        path.append((i, j))
+        
+    # 4. Invertimos la lista para que vaya desde (0, 0) hasta (N - 1, M - 1)
+    path.reverse()
+    
+    return min_cost, path
 
 # =============================================================================
 # III. Simulación de Movimiento y Difusión mediante Caminata Aleatoria (Random Walk)
@@ -170,7 +240,28 @@ def simulate_particle_with_barrier(steps: int, max_radius: float) -> bool:
     :param max_radius: Radio límite de la barrera desde el origen.
     :return: True si la partícula cruza la barrera en algún paso, False en caso contrario.
     """
-    pass
+    # 1. Posición inicial en el origen (0.0, 0.0)
+    x = 0.0
+    y = 0.0
+    
+    # 2. Simulamos paso a paso hasta el límite de pasos permitido
+    for _ in range(steps):
+        # Elegimos un ángulo aleatorio en [0, 2*pi) como pide el enunciado
+        theta = random.uniform(0, 2 * math.pi)
+        
+        # Actualizamos las coordenadas (paso de longitud 1)
+        x += math.cos(theta)
+        y += math.sin(theta)
+        
+        # Calculamos la distancia euclidiana actual al origen (0, 0)
+        distance = math.sqrt(x**2 + y**2)
+        
+        # Comprobamos si en este paso ha cruzado la barrera
+        if distance > max_radius:
+            return True
+            
+    # 3. Si completa todos los pasos sin superar max_radius, no ha escapado
+    return False
 
 def calculate_escape_probability(num_particles: int, num_steps: int, max_radius: float) -> float:
     """
@@ -182,4 +273,18 @@ def calculate_escape_probability(num_particles: int, num_steps: int, max_radius:
     :param max_radius: Radio de la barrera absorbente.
     :return: Probabilidad de escape expresada en el intervalo [0.0, 1.0].
     """
-    pass
+    # Protección por si se llamara con 0 partículas (evita división por cero)
+    if num_particles <= 0:
+        return 0.0
+        
+    # 1. Inicializamos un contador a 0 para ir sumando las partículas que logren salir
+    escaped_count = 0
+    
+    # 2. Repetimos el experimento independiente para cada partícula
+    for _ in range(num_particles):
+        # Llamamos a la función del apartado III.C.1
+        if simulate_particle_with_barrier(num_steps, max_radius):
+            escaped_count += 1
+            
+    # 3. Calculamos la proporción (probabilidad entre 0.0 y 1.0)
+    return escaped_count / num_particles
